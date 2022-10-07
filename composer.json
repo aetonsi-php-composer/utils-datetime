@@ -1,0 +1,20 @@
+{
+    "name": "aetonsi/utils-datetime",
+    "description": "utils class Aetonsi\\Utils\\Datetime",
+    "type": "library",
+    "require": {
+        "php": ">=5"
+    },
+    "license": "WTFPL",
+    "authors": [
+        {
+            "name": "aetonsi",
+            "email": "18366087+aetonsi@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Aetonsi\\": "src/"
+        }
+    }
+}
