@@ -6,17 +6,26 @@ namespace Aetonsi\Utils;
 class Datetime
 {
     /**
-     * Glavić date validator.
+     * Returns true if $datetime is a valid datetime string. If $format is specified, the string must be in the given format, to pass the check.
+     * @see https://stackoverflow.com/questions/11029769/function-to-check-if-a-string-is-a-date
      *
-     * Alternative: https://www.php.net/manual/en/function.date-parse.php
-     *
-     * @see https://stackoverflow.com/a/12323025
-     * @see https://www.php.net/manual/en/function.checkdate.php#113205
+     * @param string $datetime
+     * @param null|string $format
+     * @return bool
      */
-    public static function isValidDatetimeString($datetime, $format = 'Y-m-d H:i:s')
+    public static function isValidDatetimeString($datetime, $format = null)
     {
-        $d = \DateTime::createFromFormat($format, $datetime);
-        return $d && $d->format($format) === $datetime;
+        if ($format) {
+            // https: //www.php.net/manual/en/function.checkdate.php#113205
+            $d = \DateTime::createFromFormat($format, $datetime);
+            $result = $d && $d->format($format) === $datetime;
+        } else {
+            $parsed = \date_parse($datetime);
+            $result = ($parsed['error_count'] === 0) && ($parsed['warning_count'] === 0);
+            // alternative: $result = \is_numeric(\strtotime($datetime))
+            // alternative: try{new \Datetime($datetime);$result=true}catch(){$result=false}
+        }
+        return $result;
     }
 
     /**
